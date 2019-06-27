@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var penButton: UIButton!
     
-    var penColor:UIColor?
+    var penColor = UIColor.black
     
     var bezierPath:UIBezierPath!
     
@@ -27,8 +27,6 @@ class ViewController: UIViewController {
         let width = self.view.frame.width
         let height = self.view.frame.height
         
-        penColor = UIColor.black
-        
         // キャンパスを設置
         canvas = UIImageView()
         canvas.frame = CGRect(x:0,y:0,width:width,height:height)
@@ -37,6 +35,9 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func penChangeAction(_ sender: Any) {
+        self.penColor = UIColor.blue
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touchEvent = touches.first!
         let currentPoint:CGPoint = touchEvent.location(in: self.canvas)
@@ -76,16 +77,13 @@ class ViewController: UIViewController {
         if let image = self.lastDrawImage {
             image.draw(at: CGPoint.zero)
         }
-        let lineColor = UIColor.blue
+        let lineColor = penColor
         lineColor.setStroke()
         path.stroke()
         self.canvas.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     }
-    
-    @IBAction func penButtonAction(_ sender: Any) {
-        penColor = UIColor.black
-    }
+
     
 
 }
